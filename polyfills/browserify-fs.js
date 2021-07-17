@@ -3163,24 +3163,28 @@ var inherits_browser = createCommonjsModule(function (module) {
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor;
-    ctor.prototype = Object.create(superCtor.prototype, {
-      constructor: {
-        value: ctor,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
+    if (superCtor) {
+      ctor.super_ = superCtor;
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+    }
   };
 } else {
   // old school shim for old browsers
   module.exports = function inherits(ctor, superCtor) {
-    ctor.super_ = superCtor;
-    var TempCtor = function () {};
-    TempCtor.prototype = superCtor.prototype;
-    ctor.prototype = new TempCtor();
-    ctor.prototype.constructor = ctor;
+    if (superCtor) {
+      ctor.super_ = superCtor;
+      var TempCtor = function () {};
+      TempCtor.prototype = superCtor.prototype;
+      ctor.prototype = new TempCtor();
+      ctor.prototype.constructor = ctor;
+    }
   };
 }
 });
@@ -5218,9 +5222,6 @@ var scripts = {
 	alltests: "npm test && npm run-script functionaltests"
 };
 var license = "MIT";
-var _resolved = "https://registry.npmjs.org/levelup/-/levelup-0.18.6.tgz";
-var _integrity = "sha1-5qAcsIlhbI7MApHCqb0/DETj5es=";
-var _from = "levelup@0.18.6";
 var _package = {
 	name: name,
 	description: description,
@@ -5234,10 +5235,7 @@ var _package = {
 	devDependencies: devDependencies,
 	browser: browser,
 	scripts: scripts,
-	license: license,
-	_resolved: _resolved,
-	_integrity: _integrity,
-	_from: _from
+	license: license
 };
 
 var _package$1 = /*#__PURE__*/Object.freeze({
@@ -5254,9 +5252,6 @@ var _package$1 = /*#__PURE__*/Object.freeze({
 	browser: browser,
 	scripts: scripts,
 	license: license,
-	_resolved: _resolved,
-	_integrity: _integrity,
-	_from: _from,
 	'default': _package
 });
 
